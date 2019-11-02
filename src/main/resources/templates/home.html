@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<title>SpringIst-anbul Home Page</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+	<h2>SpringIst-anbul Home Page</h2>
+	<hr>
+	
+	<p>
+	Welcome to the SpringIst-anbul home page!
+	</p>
+	
+	<hr>
+	
+	<!-- display user name and role -->
+	
+	<div>
+		Welcome: <span sec:authentication="name"></span>
+		<br><br>
+	</div>
+	
+	<div sec:authorize="hasRole('ROLE_MANAGER')">
+	
+		<!-- Add a link to point to /leaders ... this is for the managers -->
+
+<!-- 		
+		<p>
+			<a th:href="@{/leaders}">Leadership Meeting</a>
+			(Only for Managers -- Patronlar icin)
+		</p>
+ -->
+	</div>	
+
+	<div sec:authorize="hasRole('ROLE_ADMIN')">  
+
+		<!-- Add a link to point to /systems ... this is for the admins -->
+<!-- 		
+		<p>
+			<a th:href="@{/systems}">IT Systems Meeting</a>
+			(Only for Admins -- Geeks icin)
+		</p>
+ -->	
+	</div>
+
+	<hr>
+
+
+
+	<div class="container">
+	
+		<h3>Greeting Send</h3>
+		<hr>
+		
+		<p class="h4 mb-4">Send Greeting</p>
+	
+		<form action="#" th:action="@{/greeting/save}"
+						 th:object="${greeting}" method="POST">
+		
+			<input type="text" th:field="*{message}"
+					class="form-control mb-4 col-4" placeholder="Message">
+
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+
+			<button type="submit" class="btn btn-info col-2">Send</button>
+						
+		</form>
+
+	</div>
+
+
+
+	
+	<!-- Add a logout button -->
+	<form th:action="@{/logout}" 
+			   method="POST">
+	
+		<input type="submit" value="Logout" />
+	
+	</form>	
+			
+	<!-- Back to Welcome main page -->
+	
+<a th:href="@{/}">Back to Home Page</a>
+
+	
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

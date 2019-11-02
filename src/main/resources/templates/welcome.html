@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>SpringIst-anbul WELCOME Home Page</title>
+	
+	
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	
+</head>
+
+<body>
+
+<h2>SpringIst-anbul WELCOME Home Page</h2>
+
+<hr>
+
+<p>
+	To send a greeting go to login and register page
+	
+	<a th:href="@{/home}">Log in Page</a>
+	
+</p>
+
+<hr>
+
+<div class="container">
+
+	<h3>Message Directory</h3>
+	<hr>
+		
+	<table class="table table-bordered table-striped">
+		<thead class = "thead dark">
+			<tr>
+				<th>Message</th>
+				<th>Date Time</th>
+				<th>User</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempGreeting : ${greeting}">
+			
+				<td th:text="${tempGreeting.message}" />
+				<td th:text="${tempGreeting.post_date}" />	
+				<td th:text="${tempGreeting.user.getUserName()}" />	
+				
+			</tr>
+		</tbody>		
+	</table>
+	
+</div>	
+
+
+
+
+<a th:href="@{/}">Back to Home Page</a>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
