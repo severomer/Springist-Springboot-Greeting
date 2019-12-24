@@ -100,7 +100,15 @@ public class DemoController {
 				
 	}
 	
-	
+	@PostMapping("/greeting/search")
+	public String searchGreeting( @ModelAttribute("greeting") Greeting theGreeting) {
+		
+		
+		//use a redirect to prevent duplicate submission
+		
+		return "redirect:/";
+				
+	}
 }
 
 

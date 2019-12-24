@@ -39,7 +39,14 @@
 		<thead class = "thead dark">
 			<tr>
 				<th>Message 			<input type="text" 
-					class="form-control mb-4 col-4" placeholder="Search Message"> </th>
+					class="form-control mb-4 col-4" placeholder="Search Message "> 
+					
+					<form action="#" th:action="@{/greeting/search}"
+						 th:object="${greeting}" method="POST">
+					<button type="submit" class="btn btn-info col-2">Search</button>
+					</form>
+					
+					</th>
 				<th>Date Time</th>
 				<th>User</th>
 			</tr>
