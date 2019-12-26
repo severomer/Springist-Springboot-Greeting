@@ -38,11 +38,15 @@
 	<table class="table table-bordered table-striped">
 		<thead class = "thead dark">
 			<tr>
-				<th>Message 			<input type="text" 
+
+				<th>Message 			
+
+								<form action="#" th:action="@{/}" 
+						 th:object="${greeting}" method="GET">
+					
+					 <input type="text"  name="searchValue"
 					class="form-control mb-4 col-4" placeholder="Search Message "> 
 					
-					<form action="#" th:action="@{/greeting/search}"
-						 th:object="${greeting}" method="POST">
 					<button type="submit" class="btn btn-info col-2">Search</button>
 					</form>
 					

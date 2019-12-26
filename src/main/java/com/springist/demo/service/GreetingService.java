@@ -12,4 +12,6 @@ public interface GreetingService {
 	public String dummy();
 	
 	public void save(Greeting theGreeting);
+
+	public List<Greeting> findByValue(String theValue);
 }

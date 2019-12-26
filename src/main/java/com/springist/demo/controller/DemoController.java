@@ -32,21 +32,48 @@ public class DemoController {
 	}
 	
 	@GetMapping("/home")
-	public String showHome(Model theModel) {
+	public String showHome( Model theModel) {
 
 		Greeting theGreeting = new Greeting();
 		theModel.addAttribute("greeting", theGreeting);
+		
+		
+		
+		List<Greeting> theGreetings;
+		greetingService.dummy();
+
+		theGreetings = greetingService.findAll();
+			
+		// add to the spring model
+		theModel.addAttribute("greetings", theGreetings);
+		
+
+		
+		
+		
+		
 		return "home";
 	}
 
 	@GetMapping("/")
-	public String showWelcome(Model theModel) {
+	public String showWelcome(@RequestParam(value="searchValue", required = false) String theValue, Model theModel) {
 		
 		System.out.println("Buraya Welcome Controller icine geldi");
 		
-		greetingService.dummy();
-		List<Greeting> theGreetings = greetingService.findAll();
+
 		
+		List<Greeting> theGreetings;
+		greetingService.dummy();
+		if(theValue==null || theValue=="")
+		{
+		System.out.println("Text box ici:  "+theValue);
+		theGreetings = greetingService.findAll();
+		}
+		else
+		{ 
+			System.out.println("You searched :  "+theValue);
+			 theGreetings = greetingService.findByValue(theValue);
+		}
 //		Greeting newGreeting = new Greeting("Good morning");
 //		greetingService.save(newGreeting);
 
@@ -101,9 +128,9 @@ public class DemoController {
 	}
 	
 	@PostMapping("/greeting/search")
-	public String searchGreeting( @ModelAttribute("greeting") Greeting theGreeting) {
+	public String searchGreeting(@RequestParam("searchValue") String theValue, @ModelAttribute("greeting") Greeting theGreeting) {
 		
-		
+		System.out.println("Text box ici"+theValue);
 		//use a redirect to prevent duplicate submission
 		
 		return "redirect:/";

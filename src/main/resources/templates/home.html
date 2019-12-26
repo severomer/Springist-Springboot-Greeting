@@ -81,6 +81,44 @@
 
 
 
+
+
+<div class="container">
+
+	<h3>Your Messages </h3>
+	<hr>
+	
+	<input type="hidden" name="userId" th:value="${session.user.id}" />	
+		
+	<table class="table table-bordered table-striped">
+		<thead class = "thead dark">
+			<tr>
+
+				<th>Message </th>
+				<th>Date Time</th>
+				<th>User</th>
+			</tr>
+			
+			
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempGreeting : ${greetings}">
+			
+				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.message}" />
+				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.post_date}" />	
+				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.user.getUserName()}" />	
+				
+			</tr>
+		</tbody>		
+	</table>
+	
+</div>	
+
+
+
+
+
 	
 	<!-- Add a logout button -->
 	<form th:action="@{/logout}" 

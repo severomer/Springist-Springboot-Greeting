@@ -55,4 +55,31 @@ public class GreetingRepository implements GreetingDao {
 				currentSession.saveOrUpdate(theGreeting);
 	}
 
+
+
+	public List<Greeting> findByValue(String theValue) {
+		// TODO Auto-generated method stub
+		// get the current hibernate session
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		System.out.println("findByValue Query oncesi geldi " + theValue);
+		
+		// now retrieve/read from database using username
+		Query<Greeting> theQuery = currentSession.createQuery("from Greeting where message like : smessage", Greeting.class);
+		
+		theQuery.setParameter("smessage", "%" + theValue + "%");
+		
+		System.out.println("findByValue Query icine geldi " + theValue);
+		
+		List<Greeting> theGreetings;
+		
+		try {
+			theGreetings = theQuery.getResultList();
+		} catch (Exception e) {
+			theGreetings = null;
+		}
+
+
+		return theGreetings;	}
+
 }

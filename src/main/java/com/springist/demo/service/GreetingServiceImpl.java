@@ -47,4 +47,11 @@ public class GreetingServiceImpl implements GreetingService {
 		greetingRepository.save(theGreeting);
 	}
 
+
+	@Override
+	public List<Greeting> findByValue(String theValue) {
+		// TODO Auto-generated method stub
+		return greetingRepository.findByValue(theValue);
+	}
+
 }
