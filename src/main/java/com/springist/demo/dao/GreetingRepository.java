@@ -82,4 +82,57 @@ public class GreetingRepository implements GreetingDao {
 
 		return theGreetings;	}
 
+
+
+	public List<Greeting> findByName(String userName) {
+		// TODO Auto-generated method stub
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		System.out.println("findByName Query oncesi geldi " + userName);
+		
+		// now retrieve/read from database using username
+		Query<Greeting> theQuery = currentSession.createQuery("select g from Greeting g join fetch g.user where g.user.userName =: sUser", Greeting.class);
+		
+		theQuery.setParameter("sUser",  userName );
+		
+		System.out.println("findByName Query icine geldi " + userName);
+		
+		List<Greeting> theGreetings;
+		
+		try {
+			theGreetings = theQuery.getResultList();
+		} catch (Exception e) {
+			theGreetings = null;
+		}
+
+
+		return theGreetings;	}
+
+
+
+	public Greeting findById(Long theId) {
+
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		System.out.println("findByID Query oncesi geldi " + theId);
+		
+		// now retrieve/read from database using username
+		Query<Greeting> theQuery = currentSession.createQuery("from Greeting where id =: sID", Greeting.class);
+		
+		theQuery.setParameter("sID", theId);
+		
+		System.out.println("findByıd Query icine geldi " + theId);
+		
+		Greeting theGreeting;
+		
+		try {
+			theGreeting = theQuery.getSingleResult();
+		} catch (Exception e) {
+			theGreeting = null;
+		}
+
+
+		return theGreeting;	}
+
+
 }

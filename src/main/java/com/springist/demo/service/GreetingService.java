@@ -14,4 +14,8 @@ public interface GreetingService {
 	public void save(Greeting theGreeting);
 
 	public List<Greeting> findByValue(String theValue);
+
+	public List<Greeting> findByName(String userName);
+
+	public Greeting findById(Long theId);
 }

@@ -54,4 +54,18 @@ public class GreetingServiceImpl implements GreetingService {
 		return greetingRepository.findByValue(theValue);
 	}
 
+
+	@Override
+	public List<Greeting> findByName(String userName) {
+		// TODO Auto-generated method stub
+		return greetingRepository.findByName(userName);
+	}
+
+
+	@Override
+	public Greeting findById(Long theId) {
+		// TODO Auto-generated method stub
+		return greetingRepository.findById(theId);
+	}
+
 }

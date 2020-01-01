@@ -23,6 +23,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    
    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -31,8 +34,15 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
+		http
+//		.csrf().disable()
+//	    .exceptionHandling()
+//	    .authenticationEntryPoint(restAuthenticationEntryPoint)
+//	    .and()
+	    .authorizeRequests()
 			.antMatchers("/").permitAll()
+			.antMatchers("/api").permitAll()
+			.antMatchers("/api/greetings").permitAll()
 			.antMatchers("/leaders/**").hasRole("MANAGER")
 			.antMatchers("/systems/**").hasRole("ADMIN")
 			.antMatchers("/register/**").permitAll()

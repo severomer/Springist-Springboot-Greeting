@@ -15,6 +15,7 @@
 </head>
 
 <body>
+
 	<h2>SpringIst-anbul Home Page</h2>
 	<hr>
 	
@@ -97,6 +98,7 @@
 				<th>Message </th>
 				<th>Date Time</th>
 				<th>User</th>
+				<th>Action</th>
 			</tr>
 			
 			
@@ -108,7 +110,15 @@
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.message}" />
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.post_date}" />	
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.user.getUserName()}" />	
-				
+								<!-- Add update button/link -->
+				<td>
+					<form action="#" th:action="@{/greeting/update}" method="POST">
+					
+						<input type="hidden" name="greetingId" th:value="${tempGreeting.id}" />						
+						<button type="submit" class="btn btn-info btn-sm">Update</button>
+
+					</form>
+				</td>
 			</tr>
 		</tbody>		
 	</table>
