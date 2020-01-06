@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 @Entity
 @Table(name = "greeting")
+@JsonFilter("userFilter")
 public class Greeting {
 
 	@Id

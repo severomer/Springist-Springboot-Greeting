@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<title>Update Your greeting</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+	<h2>Update Your greeting</h2>
+	<hr>
+
+	
+		
+	<div>
+		Welcome: <span sec:authentication="name"></span>
+		<br><br>
+	</div>
+
+	
+	
+	<div class="container">
+	
+		<h3>Greeting Update</h3>
+		<hr>
+		
+		<p class="h4 mb-4">Update Greeting</p>
+	
+		<form action="#" th:action="@{/greeting/up}"
+						 th:object="${greeting}" method="POST">
+		
+			<input type="text" th:field="*{message}"
+					class="form-control mb-4 col-4" placeholder="Message">
+
+			<input type="hidden" name="userId"  th:value="${session.user.id}" />
+				
+			<input type="hidden" name="greetingId" th:field="*{id}" th:value="${greeting.id}" />
+						
+			<button type="submit" class="btn btn-info col-2">Update</button>
+						
+		</form>
+
+	</div>
+
+		
+<a th:href="@{/}">Back to Home Page</a>
+
+	
+</body>
+
+</html>
+
+	
