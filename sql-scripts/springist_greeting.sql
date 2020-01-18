@@ -53,6 +53,21 @@ CONSTRAINT `FK_USER_MESSAGE` FOREIGN KEY (`user_id`)
 
 
 --
+-- Table 'event'
+--
+
+DROP TABLE IF EXISTS `event`;
+
+CREATE TABLE `event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eventname` varchar(100) NOT NULL,
+  `eventdate` DATETIME,
+  PRIMARY KEY (`id`),
+
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+--
 -- Table structure for table `role`
 --
 
@@ -101,6 +116,15 @@ INSERT INTO greeting (message,postdate,user_id)
 VALUES
 ('Congragulations','2018-10-10 15:15:15',1),('Hello Buddy', '2019-11-11 16:16:16',2);
 
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO event (eventname,eventdate)
+VALUES
+('Spring Meeting','2020-10-10 15:15:15'),('Past event', '2019-11-11 16:16:16');
+
+
 
 --
 -- Dumping data for table `users_roles`
@@ -113,4 +137,15 @@ VALUES
 (2, 2),
 (3, 1),
 (3, 2),
-(3, 3)
+(3, 3);
+
+--
+-- Add eventid column with foreign key
+--
+ALTER TABLE greeting 
+ADD `eventid` int(11);
+
+ALTER TABLE greeting 
+ADD FOREIGN KEY (`eventid`)
+references `event` (`id`) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;

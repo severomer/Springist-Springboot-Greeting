@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,7 @@ public class GreetingRestController {
 		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(greetings);
 		
 		FilterProvider filters = new SimpleFilterProvider()
+				.setFailOnUnknownId(false)
                 .addFilter("userFilter", SimpleBeanPropertyFilter
                         .filterOutAllExcept("message","post_date","user.userName"));  //nested filter not suppoerted userName notworking
     mappingJacksonValue.setFilters(filters);
@@ -48,5 +50,26 @@ public class GreetingRestController {
 		
 	}
 	
+	
+	@GetMapping("/greetings/{userName}")
+	
+	public MappingJacksonValue listUser(@PathVariable String userName){
+		
+		List<Greeting> greetings = greetingService.findByName(userName);
+		
+		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(greetings);
+		
+		FilterProvider filters = new SimpleFilterProvider()
+				.setFailOnUnknownId(false)
+                .addFilter("userFilter", SimpleBeanPropertyFilter
+                        .serializeAll()
+                        );  //nested filter not suppoerted userName notworking
+    mappingJacksonValue.setFilters(filters);
+    return mappingJacksonValue;
+
+//		return greetings;
+	
+		
+	}
 	
 }
