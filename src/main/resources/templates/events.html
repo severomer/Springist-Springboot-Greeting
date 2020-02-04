@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Events</title>
+    
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    
+    
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Events</h1>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-striped">
+        <thead class = "thead dark">
+            <tr>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Id</th>
+            </tr>
+            </thead>
+            <tr th:each="person : ${events}">
+                <td th:text="${person.event_name}"></td>
+                <td th:text="${person.event_date}"></td>
+                <td th:text="${person.id}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}"
+                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${events.totalPages != 1}" class="form-group col-md-11 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${events.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/events/(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                </li>
+                <li th:class="${events.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/events/(pageSize=${selectedPageSize}, page=${events.number})}">&larr;</a>
+                </li>
+                <li th:class="${events.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{/events/(pageSize=${selectedPageSize}, page=${page})}"
+                       th:text="${page}"></a>
+                </li>
+                <li th:class="${events.number + 1 == events.totalPages} ? disabled">
+                    <a class="pageLink"
+                       th:href="@{/events/(pageSize=${selectedPageSize}, page=${events.number + 2})}">&rarr;</a>
+                </li>
+                <li th:class="${events.number + 1 == events.totalPages} ? disabled">
+                    <a class="pageLink"
+                       th:href="@{/events/(pageSize=${selectedPageSize}, page=${events.totalPages})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
