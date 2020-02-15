@@ -29,11 +29,22 @@ public class Greeting {
 	@Column(name="postdate")
 	private Date post_date;
 	
+	@Column(name="eventid")
+	private Long eventid;
+
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 
 	
+	public Long getEventid() {
+		return eventid;
+	}
+
+	public void setEventid(Long eventid) {
+		this.eventid = eventid;
+	}
+
 	public Greeting(String message, Date post_date, User user) {
 
 		this.message = message;

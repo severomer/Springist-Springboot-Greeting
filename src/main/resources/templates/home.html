@@ -57,6 +57,14 @@
 
 	<hr>
 
+	
+	<div>
+		See your events: <a th:href="@{/my?userId={path}(path=${session.user.id})}">My events</a>
+		<span sec:authentication="name"></span>
+		<br><br>
+		
+		View all events: <a th:href="@{/events}">All Events</a>
+	</div>
 
 
 	<div class="container">
@@ -98,6 +106,7 @@
 				<th>Message </th>
 				<th>Date Time</th>
 				<th>User</th>
+				<th>Event</th>
 				<th>Action</th>
 			</tr>
 			
@@ -110,6 +119,7 @@
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.message}" />
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.post_date}" />	
 				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.user.getUserName()}" />	
+				<td th:if="${tempGreeting.user.getId()} == ${session.user.id}"  th:text="${tempGreeting.eventid}" />	
 								<!-- Add update button/link -->
 				<td>
 					<form action="#" th:action="@{/greeting/update}" method="POST">

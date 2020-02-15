@@ -18,9 +18,42 @@
     
 </head>
 <body>
+
+
+
+	<div class="container">
+	
+		<h3>Create New Event</h3>
+		<hr>
+		
+		<p class="h4 mb-4">New Event</p>
+	
+		<form action="#" th:action="@{/events/save}"
+						 th:object="${event}" method="POST">
+		
+			<input type="text" th:field="*{event_name}"
+					class="form-control mb-4 col-4" placeholder="Name">
+			
+    <!--		<input type="date"  th:field="*{event_date}" th:value="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm:ss')}"
+					class="form-control mb-4 col-4" >
+			  -->	
+			  <input type="datetime-local"   th:value="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm:ss')}"
+					name="Edate" class="form-control mb-4 col-4" >
+
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+
+			<button type="submit" class="btn btn-info col-2">Create</button>
+						
+		</form>
+
+	</div>
+
+
+
+
 <div class="container">
     <div class="row">
-        <h1>Events</h1>
+        <h1>My Events</h1>
     </div>
     <div class="row">
         <table class="table table-bordered table-striped">
@@ -29,12 +62,49 @@
                 <th>Event Name</th>
                 <th>Event Date</th>
                 <th>Id</th>
+                <th>Greetings</th>
+                <th>Send Greeting</th>
             </tr>
             </thead>
-            <tr th:each="person : ${events}">
-                <td th:text="${person.event_name}"></td>
-                <td th:text="${person.event_date}"></td>
-                <td th:text="${person.id}"></td>
+            <tr th:each="event : ${events}">
+                <td> 
+                <a th:href="@{/eventd?eventId={path}(path=${event.id})}" 
+                th:text="${event.event_name}"> </a></td>
+                <td th:text="${event.event_date}"></td>
+                <td th:text="${event.id}"></td>
+                <td> 
+                		<form action="#" th:action="@{/events}" method="GET">
+					
+						<input type="hidden" name="eventId" th:value="${event.id}" />						
+						<button type="submit" class="btn btn-info btn-sm">Show</button>
+
+					</form>
+                
+                <ul>
+                
+                <li th:each="tempGreeting : ${greetings}" th:if="${tempGreeting.getEventid()} == ${event.id}" th:text="${tempGreeting.message}" >
+                </li>
+                </ul>
+                
+                </td>
+                
+                <td>
+                
+                		<form action="#" th:action="@{/greeting/save}"
+						 th:object="${greeting}" method="POST">
+		
+			<input type="text" th:field="*{message}"
+					class="form-control mb-4 col-4" placeholder="Message">
+
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+	<input type="hidden" name="eventId" th:value="${event.id}" />
+	
+			<button type="submit" class="btn btn-info col-2">Send</button>
+						
+		</form>
+                
+                </td>
+                
             </tr>
         </table>
     </div>

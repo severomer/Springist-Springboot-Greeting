@@ -68,4 +68,11 @@ public class GreetingServiceImpl implements GreetingService {
 		return greetingRepository.findById(theId);
 	}
 
+
+	@Override
+	public List<Greeting> findByEventId(Long id) {
+		// TODO Auto-generated method stub
+		return greetingRepository.findByEventId(id);
+	}
+
 }

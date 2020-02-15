@@ -46,6 +46,7 @@
 <div class="container">
 
 	<h3>Message Directory</h3>
+	<h6>Last 5 messages</h6>
 	<hr>
 		
 	<table class="table table-bordered table-striped">
@@ -72,17 +73,57 @@
 		</thead>
 		
 		<tbody>
-			<tr th:each="tempGreeting : ${greeting}">
+		<th:block th:each="tempGreeting, count : ${greeting}">
+			<tr th:if="${count.count} le 5">
 			
 				<td th:text="${tempGreeting.message}" />
 				<td th:text="${tempGreeting.post_date}" />	
 				<td th:text="${tempGreeting.user.getUserName()}" />	
 				
 			</tr>
+			</th:block>
 		</tbody>		
 	</table>
 	
 </div>	
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <h3>Events</h3>
+        	<h6>Last 5 events</h6>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-striped">
+        <thead class = "thead dark">
+            <tr>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Id</th>
+
+            </tr>
+            </thead>
+            <tr th:each="event : ${events}">
+                <td> 
+                <a th:href="@{/eventd?eventId={path}(path=${event.id})}" 
+                th:text="${event.event_name}"> </a></td>
+                <td th:text="${event.event_date}"></td>
+                <td th:text="${event.id}"></td>
+
+                
+            </tr>
+        </table>
+    </div>
+   
+</div>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+
+
 
 
 

@@ -42,6 +42,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	    .authorizeRequests()
 			.antMatchers("/").permitAll()
 			.antMatchers("/api").permitAll()
+			.antMatchers("/links").permitAll()
 			.antMatchers("/api/greetings").permitAll()
 			.antMatchers("/api/greetings/**").permitAll()
 			.antMatchers("/leaders/**").hasRole("MANAGER")

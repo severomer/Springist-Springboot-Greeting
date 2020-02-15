@@ -30,7 +30,7 @@ public class GreetingRepository implements GreetingDao {
 		System.out.println("Buraya Query oncesi geldi");
 		
 		// now retrieve/read from database using username
-		Query<Greeting> theQuery = currentSession.createQuery("from Greeting", Greeting.class);
+		Query<Greeting> theQuery = currentSession.createQuery("from Greeting order by post_date desc", Greeting.class);
 		
 		System.out.println("Buraya Query icine geldi");
 		
@@ -133,6 +133,32 @@ public class GreetingRepository implements GreetingDao {
 
 
 		return theGreeting;	}
+
+
+
+	public List<Greeting> findByEventId(Long id) {
+		// TODO Auto-generated method stub
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		System.out.println("findByID Query oncesi geldi " + id);
+		
+		// now retrieve/read from database using username
+		Query<Greeting> theQuery = currentSession.createQuery("from Greeting where eventid =: sID", Greeting.class);
+		
+		theQuery.setParameter("sID", id);
+		
+		System.out.println("findByıd Query icine geldi " + id);
+		
+		List<Greeting> theGreetings;
+		
+		try {
+			theGreetings = theQuery.getResultList();
+		} catch (Exception e) {
+			theGreetings = null;
+		}
+
+
+		return theGreetings;	}
 
 
 }

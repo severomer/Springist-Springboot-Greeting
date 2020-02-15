@@ -18,4 +18,6 @@ public interface GreetingService {
 	public List<Greeting> findByName(String userName);
 
 	public Greeting findById(Long theId);
+
+	public List<Greeting> findByEventId(Long id);
 }

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Event Detail</title>
+    
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 40%;
+        width: 40%;
+		margin-left: auto; 
+        margin-right: auto;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: auto;
+        margin-left: auto; 
+        margin-right: auto;
+        padding: 0;
+      }
+    </style>
+    
+</head>
+<body>
+
+	<div>
+		Welcome: 
+		<br><br>
+	</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <h1>Event Details</h1>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-striped">
+        <thead class = "thead dark">
+            <tr>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Id</th>
+                <th>Greetings</th>
+                <th>Send Greeting</th>
+                <th>Event Location</th>
+            </tr>
+            </thead>
+            <tr>
+                <td> 
+                <a th:href="@{/eventd?eventId={path}(path=${event.id})}" 
+                th:text="${event.event_name}"> </a></td>
+                <td th:text="${event.event_date}"></td>
+                <td th:text="${event.id}"></td>
+                <td> 
+                		<form action="#" th:action="@{/events}" method="GET">
+					
+						<input type="hidden" name="eventId" th:value="${event.id}" />						
+						<button type="submit" class="btn btn-info btn-sm">Show</button>
+
+					</form>
+                
+                <ul>
+                
+                <li th:each="tempGreeting : ${greetings}" th:if="${tempGreeting.getEventid()} == ${event.id}" th:text="${tempGreeting.message}" >
+                </li>
+                </ul>
+                
+                </td>
+                
+                <td>
+                
+                		<form action="#" th:action="@{/greeting/save}"
+						 th:object="${greeting}" method="POST">
+		
+			<input type="text" th:field="*{message}"
+					class="form-control mb-4 col-4" placeholder="Message">
+
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+	<input type="hidden" name="eventId" th:value="${event.id}" />
+	
+			<button type="submit" class="btn btn-info col-2">Send</button>
+					
+		</form>
+                
+                </td>
+                <td>
+<!--  	 	 th:text="${lat}"            -->
+	 
+	 	<form action="#" th:action="@{/events/update}"
+						 th:object="${event}" method="POST">
+		
+			<input type="text" 
+					name="eLat" class="form-control mb-4 col-4" placeholder="Latitude">
+			
+		
+			<input type="text" 
+					name= "eLng" class="form-control mb-4 col-4" placeholder="Longitude">
+<!-- 
+			<input type="hidden"  th:field="*{event_name}" />	
+			
+			<input type="hidden"  th:field="*{event_date}" />	
+			
+				<input type="hidden"  th:field="*{id}" />	
+-->			
+			<input type="hidden" name="eventId" th:value="${event.id}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+					
+			<button type="submit" class="btn btn-info col-2">Locate</button>
+						
+		</form>
+	 
+	 
+	 
+                </td>
+                
+                
+                              <td>
+<!--  	 	 th:text="${lat}"            -->
+	 
+	 	<form action="#" th:action="@{/eventd/sendemail}" method="POST">
+			<input type="hidden" name="eventname" th:value="${event.event_name}" />	
+			<input type="hidden" name="eventdate" th:value="${event.event_date}" />	
+			<input type="hidden" name="pageaddress" th:value="${#httpServletRequest.requestURI}" />	
+			<button type="submit" class="btn btn-info col-2">Send Email</button>
+						
+		</form>
+	 
+	 
+	 
+                </td>
+                
+                
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="map"></div>
+    <script>
+      var map;
+  //    var userLng = $('#lng').val();
+  var userLng = "[[${lng}]]";
+  //	var userLat = $('#lat').val();
+  var userLat = "[[${lat}]]";
+  	document.write(userLat);
+  	document.write(userLng);
+  	document.write("[[${lat}]]");
+  	document.write("[[${lng}]]");
+  	document.write($('#lng'));
+  	console.log(userLat);
+  	console.log(userLng);
+ // 	var uLat = 42.0; // parseFloat(userLat.val());
+ // 	var uLng = 28.0; // parseFloat(userLng.val());
+  	document.write(uLat);
+  	document.write(uLng);
+      function initMap() {
+  	    //    var userLng = $('#lng').val();
+  	    var userLng = "[[${lng}]]";
+  	    //	var userLat = $('#lat').val();
+  	    var userLat = "[[${lat}]]";
+    	var uLat =  parseFloat(userLat);
+    	var uLng =  parseFloat(userLng);
+    	alert (uLat + " and " + uLng);
+    	document.write(userLat);
+    	document.write(userLng);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: uLat, lng: uLng},
+          zoom: 8
+        });
+        
+
+        var marker = new google.maps.Marker({
+          position: {lat: uLat, lng: uLng},
+          map: map,
+          title: "[[${event.event_name}]]"
+        });
+        
+        
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjZa6pOwoneJVzbtBXP-YFcC1DsRgVxb0&callback=initMap"
+    async defer></script>
+    
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

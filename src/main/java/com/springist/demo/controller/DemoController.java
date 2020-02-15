@@ -2,8 +2,11 @@ package com.springist.demo.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +15,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.springist.demo.entity.Event;
 import com.springist.demo.entity.Greeting;
 import com.springist.demo.entity.User;
+import com.springist.demo.service.EventService;
 import com.springist.demo.service.GreetingService;
 import com.springist.demo.service.UserService;;
 
 @Controller
 public class DemoController {
+
+	private static final Integer INITIAL_EVENTID = 0;
+
 
 	private GreetingService greetingService;
 	
@@ -26,10 +34,15 @@ public class DemoController {
     @Autowired
     private UserService userService;
 	
+    
+    private final EventService eventService;
+
+
 	
 	@Autowired
-	public DemoController(GreetingService theGreetingService) {
+	public DemoController(GreetingService theGreetingService, EventService eventService) {
 		greetingService = theGreetingService;
+		this.eventService = eventService;
 	}
 	
 	@GetMapping("/home")
@@ -94,6 +107,9 @@ public class DemoController {
 		theModel.addAttribute("greeting", theGreetings);
 		
 
+		Page<Event> events = eventService.findAllPageable(PageRequest.of(0, 5));
+		// add to the spring model
+		theModel.addAttribute("events", events);
 		
 		return "welcome";
 	}
@@ -114,11 +130,21 @@ public class DemoController {
 		return "systems";
 	}
 	
-	
-	
+	@GetMapping("/map")
+	public String showMap() {
+		
+		return "map2";
+	}
+	@GetMapping("/links")
+	public String showLinks() {
+		
+		return "links";
+	}
 
 	@PostMapping("/greeting/save")
-	public String saveGreeting(@RequestParam("userId") int theId, @ModelAttribute("greeting") Greeting theGreeting) {
+	public String saveGreeting(@RequestParam("userId") int theId,
+			@RequestParam("eventId") Optional<Integer> eventId,
+			@ModelAttribute("greeting") Greeting theGreeting) {
 		
 		LocalDateTime localDateTime = LocalDateTime.now();
 		
@@ -129,6 +155,11 @@ public class DemoController {
 		theUser = userService.findByUserId((long)theId);
 		
 		theGreeting.setUser(theUser);
+	
+// gecici event id default 2 yazdim.
+        
+        int evalEventId = eventId.orElse(INITIAL_EVENTID);
+		theGreeting.setEventid((long) evalEventId);
 		
 		greetingService.save(theGreeting);
 		
