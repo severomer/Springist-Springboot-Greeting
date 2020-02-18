@@ -57,6 +57,7 @@
                 <th>Greetings</th>
                 <th>Send Greeting</th>
                 <th>Event Location</th>
+				<th>Event Privacy</th>
             </tr>
             </thead>
             <tr>
@@ -143,8 +144,9 @@
 	 
 	 
 	 
-                </td>
+                <td th:text="${event.ozel}">
                 
+                </td>
                 
             </tr>
         </table>
@@ -194,7 +196,7 @@
         
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjZa6pOwoneJVzbtBXP-YFcC1DsRgVxb0&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"
     async defer></script>
     
 <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>

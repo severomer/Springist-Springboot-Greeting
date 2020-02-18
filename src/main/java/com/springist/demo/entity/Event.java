@@ -36,7 +36,17 @@ public class Event {
 	@Column(name="lng")
 	private String elng;
 	
+	@Column(name="isprivate")
+	private Boolean ozel;
 	
+	public Boolean isOzel() {
+		return ozel;
+	}
+
+	public void setOzel(Boolean ozel) {
+		this.ozel = ozel;
+	}
+
 	public Event(Long id, String event_name, Date event_date, Long userId, String elat, String elng) {
 		this.id = id;
 		this.event_name = event_name;
