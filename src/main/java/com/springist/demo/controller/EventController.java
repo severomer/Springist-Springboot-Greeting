@@ -71,10 +71,11 @@ public class EventController {
 	        
 	        int evalEventId = eventId.orElse(INITIAL_USERID);
 	        
-	        Page<Event> events = eventService.findAllPageable(PageRequest.of(evalPage, evalPageSize));
+	//        Page<Event> events = eventService.findAllPageable(PageRequest.of(evalPage, evalPageSize));
+	        Page<Event> events = eventService.findByOzelFalse(PageRequest.of(evalPage, evalPageSize));
 	        Pager pager = new Pager(events.getTotalPages(), events.getNumber(), BUTTONS_TO_SHOW);
 
-	        
+	
 			
 			List<Greeting> theGreetings;
 

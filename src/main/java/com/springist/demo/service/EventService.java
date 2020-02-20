@@ -17,4 +17,6 @@ public interface EventService {
 	void save(Event theEvent);
 
 	Optional<Event> findById(Long eventId);
+
+	Page<Event> findByOzelFalse(Pageable pageable);
 }

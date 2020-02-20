@@ -43,4 +43,10 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findById(eventId);
 	}
 
+	@Override
+	public Page<Event> findByOzelFalse(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return eventRepository.findByOzelFalse(pageable);
+	}
+
 }

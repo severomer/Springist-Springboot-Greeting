@@ -39,7 +39,7 @@ public class Event {
 	@Column(name="isprivate")
 	private Boolean ozel;
 	
-	public Boolean isOzel() {
+	public Boolean getOzel() {
 		return ozel;
 	}
 

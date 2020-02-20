@@ -12,4 +12,6 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
 
 	Page<Event> findByUserId(Long userId, Pageable pageable);
 
+	Page<Event> findByOzelFalse(Pageable pageable);
+
 }

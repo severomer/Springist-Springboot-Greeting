@@ -25,7 +25,7 @@ import com.springist.demo.service.UserService;;
 @Controller
 public class DemoController {
 
-	private static final Integer INITIAL_EVENTID = 0;
+	private static final Integer INITIAL_EVENTID = 33;
 
 
 	private GreetingService greetingService;
