@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Event Attendance</title>
+    
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 40%;
+        width: 40%;
+		margin-left: auto; 
+        margin-right: auto;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: auto;
+        margin-left: auto; 
+        margin-right: auto;
+        padding: 0;
+      }
+    </style>
+    
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <h1>Event  Attendance</h1>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-striped">
+        <thead class = "thead dark">
+            <tr>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Event Members</th>
+            </tr>
+            </thead>
+            <tr>
+                <td> 
+                <a th:href="@{/eventd?eventId={path}(path=${event.id})}" 
+                th:text="${event.event_name}"> </a></td>
+                <td th:text="${event.event_date}"></td>
+
+      
+        
+        <td>
+                  
+                <br><br>
+                <ul  th:if="${not #lists.isEmpty(eventmembers)}">
+                <li  th:each="tempEser : ${eventmembers}" th:text="${tempEser.getUser().getUserName()} + ' ' + ${tempEser.isAttended()}">
+                <input 
+      type="checkbox" 
+      name="myBooleanVariable" 
+      th:checked="${myBooleanVariable}"/>
+                </li>
+                </ul>
+
+                
+        </td>
+        
+        <td>
+        <th:block th:each="tempEser : ${eventmembers}" >
+
+      
+                      	 
+	 	<form action="#" th:action="@{/events/updattend}"
+						 th:object="${tempUser}" method="POST">
+			<input 
+      type="checkbox" 
+      name="myBooleanVariable" 
+      id="myBooleanVariable" 
+      th:field="*{attended}"
+      th:text="${tempEser.getUser().getUserName()} + ' ' + ${tempEser.isAttended()}"
+      th:checked="${tempEser.isAttended()}"/>
+      	
+			<input type="hidden" name="eventId" th:value="${tempEser.getEvent().getId()}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${tempEser.getUser().getId()}" />	
+			
+			<input type="hidden" name="eventmem" th:value="${tempEser.getPrimaryKey()}" />	
+			
+			<input type="hidden" name="checked" th:value="${myBooleanVariable}" />	
+											
+			<button type="submit" class="btn btn-info btn-sm">Update Attend</button>
+						
+		</form>
+         </th:block>
+        </td>
+        
+        
+               </tr>
+        </table>
+        
+        
+        	 
+	 	<form action="#" th:action="@{/events/join}"
+						 th:object="${event}" method="POST">
+				
+			<input type="hidden" name="eventId" th:value="${event.id}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+					
+			<button type="submit" class="btn btn-info btn-sm">Join</button>
+						
+		</form>
+	 
+        <br>
+        <br>
+                	 
+	 	<form action="#" th:action="@{/events/updattend}"
+						 th:object="${event}" method="POST">
+				
+			<input type="hidden" name="eventId" th:value="${event.id}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+			
+			<input type="hidden" name="eventmem" th:value="${eventmembers.get(0)}" />	
+								
+			<button type="submit" class="btn btn-info btn-sm">Update Attend</button>
+						
+		</form>
+		
+    </div>
+</div>
+    
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -1,12 +1,21 @@
 package com.springist.demo.entity;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,6 +48,26 @@ public class Event {
 	@Column(name="isprivate")
 	private Boolean ozel;
 	
+	
+    @OneToMany(mappedBy = "primaryKey.event",
+            cascade = CascadeType.ALL)	
+	private Set<EventUser> eventUsers = new HashSet<EventUser>();
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "event_members", 
+	joinColumns = @JoinColumn(name = "event_id"), 
+	inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Collection<User> members;
+	
+	
+	public Collection<User> getMembers() {
+		return members;
+	}
+
+	public void setMembers(Collection<User> members) {
+		this.members = members;
+	}
+
 	public Boolean getOzel() {
 		return ozel;
 	}
@@ -114,5 +143,16 @@ public class Event {
 		return "Event [id=" + id + ", event_name=" + event_name + ", event_date=" + event_date + "]";
 	}
 
-	
+
+    public Set<EventUser> getEventUsers() {
+        return eventUsers;
+    }
+ 
+    public void setEventUsers(Set<EventUser> events) {
+        this.eventUsers = events;
+    }
+     
+    public void addEventUser(EventUser eventUser) {
+        this.eventUsers.add(eventUser);
+    }  
 }

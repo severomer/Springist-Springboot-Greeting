@@ -41,10 +41,11 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 //	    .and()
 	    .authorizeRequests()
 			.antMatchers("/").permitAll()
-			.antMatchers("/api").permitAll()
+//			.antMatchers("/api").permitAll()
 			.antMatchers("/links").permitAll()
-			.antMatchers("/api/greetings").permitAll()
-			.antMatchers("/api/greetings/**").permitAll()
+			.antMatchers("/", "/error", "/webjars/**","/js/**").permitAll()
+//			.antMatchers("/api/greetings").permitAll()
+//			.antMatchers("/api/greetings/**").permitAll()
 			.antMatchers("/leaders/**").hasRole("MANAGER")
 			.antMatchers("/systems/**").hasRole("ADMIN")
 			.antMatchers("/register/**").permitAll()
@@ -56,10 +57,13 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(customAuthenticationSuccessHandler)
 				.permitAll()
 			.and()
+//			.oauth2Login()
+//			.and()
 			.logout().permitAll()
 			.and()
-			.exceptionHandling().accessDeniedPage("/access-denied");
-		
+			.exceptionHandling().accessDeniedPage("/access-denied")
+			.and()
+					.httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint); //rest api erisimi icin ekledim
 	}
 	
 	//beans

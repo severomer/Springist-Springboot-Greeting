@@ -57,7 +57,9 @@
                 <th>Greetings</th>
                 <th>Send Greeting</th>
                 <th>Event Location</th>
+                <th>Send Email</th>
 				<th>Event Privacy</th>
+                <th>Event Members</th>
             </tr>
             </thead>
             <tr>
@@ -65,9 +67,9 @@
                 <a th:href="@{/eventd?eventId={path}(path=${event.id})}" 
                 th:text="${event.event_name}"> </a></td>
                 <td th:text="${event.event_date}"></td>
-                <td th:text="${event.id}"></td>
+                <td th:text="${owner}"></td>
                 <td> 
-                		<form action="#" th:action="@{/events}" method="GET">
+                		<form action="#" th:action="@{/eventd?eventId={path}(path=${event.id})}" method="GET">
 					
 						<input type="hidden" name="eventId" th:value="${event.id}" />						
 						<button type="submit" class="btn btn-info btn-sm">Show</button>
@@ -93,7 +95,7 @@
 			<input type="hidden" name="userId" th:value="${session.user.id}" />	
 	<input type="hidden" name="eventId" th:value="${event.id}" />
 	
-			<button type="submit" class="btn btn-info col-2">Send</button>
+			<button type="submit" class="btn btn-info btn-sm">Send</button>
 					
 		</form>
                 
@@ -122,7 +124,7 @@
 			
 			<input type="hidden" name="userId" th:value="${session.user.id}" />	
 					
-			<button type="submit" class="btn btn-info col-2">Locate</button>
+			<button type="submit" class="btn btn-info btn-sm">Locate</button>
 						
 		</form>
 	 
@@ -138,7 +140,7 @@
 			<input type="hidden" name="eventname" th:value="${event.event_name}" />	
 			<input type="hidden" name="eventdate" th:value="${event.event_date}" />	
 			<input type="hidden" name="pageaddress" th:value="${#httpServletRequest.requestURI}" />	
-			<button type="submit" class="btn btn-info col-2">Send Email</button>
+			<button type="submit" class="btn btn-info btn-sm">Send Email</button>
 						
 		</form>
 	 
@@ -148,8 +150,67 @@
                 
                 </td>
                 
+      <!--            	 
+                <td th:text="${event.getMembers()}">
+                
+                </td>
+        -->  
+        
+        <td>
+          
+                <ul>
+                
+                <li th:each="tempUser : ${members}"  th:text="${tempUser.getUserName()}" >
+                </li>
+                </ul>
+           
+                <br><br>
+                <ul  th:if="${not #lists.isEmpty(eventmembers)}">
+                <li  th:each="tempEser : ${eventmembers}" th:text="${tempEser.getUser().getUserName()} + ' ' + ${tempEser.isAttended()}"   >
+                </li>
+                </ul>
+                
+                
+        </td>
+        
+        
+        <td>
+					<img th:src="@{/qrcode/{path}(path=${event.id})}" width="100" height="100">
+					
+				</td>
+               
             </tr>
         </table>
+        
+        
+        	 
+	 	<form action="#" th:action="@{/events/join}"
+						 th:object="${event}" method="POST">
+				
+			<input type="hidden" name="eventId" th:value="${event.id}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+					
+			<button type="submit" class="btn btn-info btn-sm">Join</button>
+						
+		</form>
+	 
+        <br>
+        <br>
+                	 
+	 	<form action="#" th:action="@{/events/attend}"
+						 th:object="${event}" method="GET">
+				
+			<input type="hidden" name="eventId" th:value="${event.id}" />	
+			
+			
+			<input type="hidden" name="userId" th:value="${session.user.id}" />	
+					
+			<button type="submit" class="btn btn-info btn-sm">Attendance</button>
+						
+		</form>
+		
     </div>
 </div>
 

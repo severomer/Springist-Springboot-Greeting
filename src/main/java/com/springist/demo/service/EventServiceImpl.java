@@ -1,5 +1,6 @@
 package com.springist.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.springist.demo.dao.EventRepository;
 import com.springist.demo.entity.Event;
+import com.springist.demo.entity.EventUser;
+import com.springist.demo.entity.User;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -47,6 +50,24 @@ public class EventServiceImpl implements EventService {
 	public Page<Event> findByOzelFalse(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return eventRepository.findByOzelFalse(pageable);
+	}
+
+	@Override
+	public Page<Event> findByMembers(User eUser, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return eventRepository.findByMembers(eUser, pageable);
+	}
+
+	@Override
+	public Page<Event> findByEventUsers(EventUser eventUser, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return eventRepository.findByEventUsers(eventUser, pageable);
+	}
+
+	@Override
+	public Page<Event> findByIdIn(List<Long> findByUser, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return eventRepository.findByIdIn(findByUser, pageable);
 	}
 
 }

@@ -63,6 +63,10 @@
 		<span sec:authentication="name"></span>
 		<br><br>
 		
+		See your joined events: <a th:href="@{/joined?userId={path}(path=${session.user.id})}">Joined events</a>
+		<span sec:authentication="name"></span>
+		<br><br>
+		
 		View all events: <a th:href="@{/events}">All Events</a>
 	</div>
 

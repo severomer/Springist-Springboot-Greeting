@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -29,6 +31,10 @@ public class User {
 
 	@Column(name = "email")
 	private String email;
+	
+    @OneToMany(mappedBy = "primaryKey.user",
+            cascade = CascadeType.ALL)	
+	private Set<EventUser> eventUsers = new HashSet<EventUser>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", 
@@ -128,4 +134,17 @@ public class User {
 				+ ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
 				+ ", roles=" + roles + '}';
 	}
+	
+
+    public Set<EventUser> getEventUsers() {
+        return eventUsers;
+    }
+ 
+    public void setEventUsers(Set<EventUser> events) {
+        this.eventUsers = events;
+    }
+     
+    public void addEventUser(EventUser eventUser) {
+        this.eventUsers.add(eventUser);
+    }  
 }
